@@ -26,6 +26,12 @@
             'vote' => 2,
             'distance_to_center' => 50],
     ];
+
+    if (isset($_GET['filtroParcheggio']) && $_GET['filtroParcheggio'] == "1") {
+        $hotels = array_filter($hotels, function ($hotel) {
+            return $hotel['parking'] === true;
+        });
+    }
 ?>
 
 <!DOCTYPE html>
@@ -43,8 +49,16 @@
 
 </head>
 <body>
+    <header class="d-flex justify-content-between">
+        <h1>Hotel list:</h1>
+
+        <form method="GET" action="">
+            <label for="filtroParcheggio">Mostra solo hotel con parcheggio:</label>
+            <input type="checkbox" name="filtroParcheggio" id="filtroParcheggio" value="1" <?php echo (isset($_GET['filtroParcheggio']) && $_GET['filtroParcheggio'] == "1") ? "checked" : ""; ?>>
+            <button type="submit">Filtra</button>
+        </form>
+    </header>
     
-    <h1>Hotel list:</h1>
     <table class="table">
         <thead>
             <tr>
@@ -60,13 +74,14 @@
                 <tr>
                 <td><?php echo $hotel['name']?></td>
                 <td><?php echo $hotel['description']?></td>
-                <td><?php $parking = ($hotel['parking'] =='true') ? 'Yes' : 'No'; echo $parking?></td>
+                <td><?php echo $hotel['parking'] ? 'Yes' : 'No'?></td>
                 <td><?php echo $hotel['vote']?></td>
                 <td><?php echo $hotel['distance_to_center']?></td>
                 </tr>
             <?php } ?>
         </tbody>
     </table>
-    
+
 </body>
 </html>
+

@@ -27,9 +27,16 @@
             'distance_to_center' => 50],
     ];
 
-    if (isset($_GET['filtroParcheggio']) && $_GET['filtroParcheggio'] == "1") {
+    if (isset($_GET['parkingSpot']) && $_GET['parkingSpot'] == "1") {
         $hotels = array_filter($hotels, function ($hotel) {
             return $hotel['parking'] === true;
+        });
+    };
+
+    if (isset($_GET['rating']) && is_numeric($_GET['rating'])) {
+        $rating = intval($_GET['rating']);
+        $hotels = array_filter($hotels, function ($hotel) use ($rating) {
+            return $hotel['vote'] >= $rating;
         });
     }
 ?>
@@ -49,17 +56,23 @@
 
 </head>
 <body>
-    <header class="d-flex justify-content-between">
-        <h1>Hotel list:</h1>
+    <header class="d-flex justify-content-between w-75 m-auto">
+        <h1 class="p-3">Hotel list:</h1>
 
-        <form method="GET" action="">
-            <label for="filtroParcheggio">Mostra solo hotel con parcheggio:</label>
-            <input type="checkbox" name="filtroParcheggio" id="filtroParcheggio" value="1" <?php echo (isset($_GET['filtroParcheggio']) && $_GET['filtroParcheggio'] == "1") ? "checked" : ""; ?>>
-            <button type="submit">Filtra</button>
+        <form method="GET" action="" class="d-flex flex-column p-3">
+            <div class="parking">
+                <label for="parkingSpot">Show only hotels with parking:</label>
+                <input type="checkbox" name="parkingSpot" id="parkingSpot" value="1" <?php echo (isset($_GET['parkingSpot']) && $_GET['parkingSpot'] == "1") ? "checked" : ""; ?>>
+            </div>
+            <div class="vote">
+                <label for="rating">Minimum rating:</label>
+                <input type="number" name="rating" id="rating" value="<?php echo isset($_GET['rating']) ? $_GET['rating'] : ""; ?>" class="w-25">
+            </div>
+            <button type="submit" class="w-25 align-self-end">Filter</button>
         </form>
     </header>
     
-    <table class="table">
+    <table class="table m-auto w-75">
         <thead>
             <tr>
             <th scope="col">Name</th>

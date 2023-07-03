@@ -45,14 +45,28 @@
 <body>
     
     <h1>Hotel list:</h1>
-    <ul>
-    <?php foreach ($hotels as $hotel){?>
-        <li>Name: <?php echo $hotel['name']?></li>
-        <li>Description: <?php echo $hotel['description']?></li>
-        <li>Parking: <?php echo $hotel['parking']?></li>
-        <li>Vote: <?php echo $hotel['vote']?></li>
-        <li>Distance to center: <?php echo $hotel['distance_to_center']?></li>
-    <?php } ?>
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Parking</th>
+            <th scope="col">Vote</th>
+            <th scope="col">Distance to center</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($hotels as $hotel){?>
+                <tr>
+                <td><?php echo $hotel['name']?></td>
+                <td><?php echo $hotel['description']?></td>
+                <td><?php $parking = ($hotel['parking'] =='true') ? 'Yes' : 'No'; echo $parking?></td>
+                <td><?php echo $hotel['vote']?></td>
+                <td><?php echo $hotel['distance_to_center']?></td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    
 </body>
 </html>

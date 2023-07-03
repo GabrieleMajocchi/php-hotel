@@ -27,14 +27,14 @@
             'distance_to_center' => 50],
     ];
 
-    if (isset($_GET['parkingSpot']) && $_GET['parkingSpot'] == "1") {
+    if (isset($_POST['parkingSpot']) && $_POST['parkingSpot'] == "1") {
         $hotels = array_filter($hotels, function ($hotel) {
             return $hotel['parking'] === true;
         });
     };
 
-    if (isset($_GET['rating']) && is_numeric($_GET['rating'])) {
-        $rating = intval($_GET['rating']);
+    if (isset($_POST['rating']) && is_numeric($_POST['rating'])) {
+        $rating = intval($_POST['rating']);
         $hotels = array_filter($hotels, function ($hotel) use ($rating) {
             return $hotel['vote'] >= $rating;
         });
@@ -59,14 +59,14 @@
     <header class="d-flex justify-content-between w-75 m-auto">
         <h1 class="p-3">Hotel list:</h1>
 
-        <form method="GET" action="" class="d-flex flex-column p-3">
+        <form method="POST" action="" class="d-flex flex-column p-3">
             <div class="parking">
                 <label for="parkingSpot">Show only hotels with parking:</label>
-                <input type="checkbox" name="parkingSpot" id="parkingSpot" value="1" <?php echo (isset($_GET['parkingSpot']) && $_GET['parkingSpot'] == "1") ? "checked" : ""; ?>>
+                <input type="checkbox" name="parkingSpot" id="parkingSpot" value="1" <?php echo (isset($_POST['parkingSpot']) && $_POST['parkingSpot'] == "1") ? "checked" : ""; ?>>
             </div>
             <div class="vote">
                 <label for="rating">Minimum rating:</label>
-                <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo isset($_GET['rating']) ? $_GET['rating'] : ""; ?>" class="w-25">
+                <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo isset($_POST['rating']) ? $_POST['rating'] : ""; ?>" class="w-25">
             </div>
             <button type="submit" class="w-25 align-self-end">Filter</button>
         </form>

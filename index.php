@@ -66,7 +66,7 @@
             </div>
             <div class="vote">
                 <label for="rating">Minimum rating:</label>
-                <input type="number" name="rating" id="rating" value="<?php echo isset($_GET['rating']) ? $_GET['rating'] : ""; ?>" class="w-25">
+                <input type="number" name="rating" id="rating" min="1" max="5" value="<?php echo isset($_GET['rating']) ? $_GET['rating'] : ""; ?>" class="w-25">
             </div>
             <button type="submit" class="w-25 align-self-end">Filter</button>
         </form>
